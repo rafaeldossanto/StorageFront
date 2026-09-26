@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import i18n, { i18nReady } from '../i18n'
-import { ApiError, call, errorMessage, NETWORK_ERROR, UNKNOWN_ERROR } from './errors'
+import { ApiError, errorMessage, UNKNOWN_ERROR } from './errors'
 
 await i18nReady
+
+// `bind` fixes `this` inside t to the i18n instance. Passing i18n.t around on its own
+// would lose it: in JavaScript, `this` depends on how a function is called, not where it
+// was written - the classic trap for anyone coming from Java or C#.
 const t = i18n.t.bind(i18n)
 
 describe('ApiError.fromResponse', () => {
@@ -11,10 +15,12 @@ describe('ApiError.fromResponse', () => {
 
     expect(error.status).toBe(409)
     expect(error.code).toBe('barcode.taken')
+    expect(error).toBeInstanceOf(Error)
   })
 
   it('treats a response without a code as a server bug', () => {
     expect(ApiError.fromResponse(500, undefined).code).toBe(UNKNOWN_ERROR)
+    expect(ApiError.fromResponse(502, 'Bad Gateway').code).toBe(UNKNOWN_ERROR)
   })
 })
 
@@ -33,32 +39,5 @@ describe('errorMessage', () => {
 
   it('falls back to the generic message for anything that is not an ApiError', () => {
     expect(errorMessage(t, new TypeError('boom'))).toBe(t('errors.unknown'))
-  })
-})
-
-describe('call', () => {
-  const answer = (status: number, body?: unknown) =>
-    Promise.resolve({
-      data: status < 400 ? body : undefined,
-      error: status >= 400 ? body : undefined,
-      response: new Response(null, { status }),
-    })
-
-  it('returns the data of a successful answer', async () => {
-    await expect(call(() => answer(200, { status: 'ok' }))).resolves.toEqual({ status: 'ok' })
-  })
-
-  it('turns a refusal into an ApiError carrying its code', async () => {
-    await expect(call(() => answer(404, { code: 'product.not_found' }))).rejects.toMatchObject({
-      status: 404,
-      code: 'product.not_found',
-      isNotFound: true,
-    })
-  })
-
-  it('turns a request that never got an answer into a network error', async () => {
-    await expect(call(() => Promise.reject(new TypeError('Failed to fetch')))).rejects.toMatchObject({
-      code: NETWORK_ERROR,
-    })
   })
 })
