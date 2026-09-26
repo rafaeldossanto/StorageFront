@@ -1,12 +1,109 @@
 {
   "app": {
-    "name": "Storage",
-    "tagline": "Gestão de estoque para o seu mercado"
+    "name": "Storage"
+  },
+  "common": {
+    "close": "Fechar",
+    "notifications": "Notificações"
   },
   "status": {
-    "checking": "Conectando ao servidor…",
-    "online": "Servidor conectado",
-    "offline": "Servidor fora do ar"
+    "retry": "Tentar de novo"
+  },
+  "shell": {
+    "products": "Produtos",
+    "dark": "Escuro",
+    "light": "Claro",
+    "signOut": "Sair",
+    "roles": {
+      "Owner": "Dono",
+      "Staff": "Funcionário"
+    }
+  },
+  "auth": {
+    "signInTab": "Entrar",
+    "signUpTab": "Criar loja",
+    "signInTitle": "Bem-vindo de volta",
+    "signInHint": "Entre para cuidar do estoque da sua loja.",
+    "signUpTitle": "Sua loja no Storage",
+    "signUpHint": "Crie a loja e já comece a bipar. As categorias de mercado já vêm prontas.",
+    "email": "E-mail",
+    "password": "Senha",
+    "passwordHint": "Pelo menos 8 caracteres.",
+    "shopName": "Nome da loja",
+    "ownerName": "Seu nome",
+    "signIn": "Entrar",
+    "signUp": "Criar loja e entrar"
+  },
+  "products": {
+    "title": "Produtos",
+    "subtitle": "Bipe um código para cadastrar ou editar.",
+    "count_zero": "Nenhum produto",
+    "count_one": "{{count}} produto",
+    "count_other": "{{count}} produtos",
+    "scanPlaceholder": "Bipe um código ou digite o nome",
+    "newProduct": "Novo produto",
+    "categories": "Categorias",
+    "results": "Resultados para “{{term}}”",
+    "clearSearch": "Limpar busca",
+    "loadMore": "Mostrar mais",
+    "empty": "Nenhum produto nesta categoria ainda. Bipe um código para cadastrar o primeiro.",
+    "noResults": "Nada encontrado para “{{term}}”.",
+    "inactive": "Inativo",
+    "session": {
+      "title": "Nesta sessão",
+      "empty": "Os produtos que você cadastrar ou editar aparecem aqui, com o preço editável na hora.",
+      "edit": "Editar {{name}}",
+      "price": "Preço de {{name}}",
+      "saved": "Preço salvo"
+    },
+    "form": {
+      "createTitle": "Novo produto",
+      "createHint": "Preencha o resto e cadastre.",
+      "editHint": "Edite o cadastro do produto.",
+      "barcode": "Código de barras",
+      "name": "Nome",
+      "namePlaceholder": "Ex.: Energético 473ml",
+      "category": "Categoria",
+      "categoryPlaceholder": "Escolha a categoria",
+      "price": "Preço de venda",
+      "unit": "Vendido por",
+      "units": {
+        "Unit": "Unidade",
+        "Kilogram": "Quilo",
+        "Liter": "Litro"
+      },
+      "unitWords": {
+        "Unit": "unidade",
+        "Kilogram": "quilo",
+        "Liter": "litro"
+      },
+      "minimumStock": "Estoque mínimo",
+      "minimumStockHint": "Avisa quando o estoque ficar abaixo disso. 0 desliga o aviso.",
+      "decrease": "Diminuir",
+      "increase": "Aumentar",
+      "tracksExpiry": "Controla validade",
+      "tracksExpiryHint": "A entrada de mercadoria vai pedir a data de validade.",
+      "packagings": "Códigos deste produto",
+      "packagingUnits_one": "{{count}} unidade",
+      "packagingUnits_other": "{{count}} unidades",
+      "summary": "Preço de venda",
+      "perUnit": "por {{unit}}",
+      "cancel": "Cancelar",
+      "create": "Cadastrar",
+      "save": "Salvar",
+      "delete": "Excluir",
+      "priceInvalid": "Digite um preço, como 8,99.",
+      "categoryRequired": "Escolha a categoria."
+    },
+    "toast": {
+      "created": "Produto cadastrado",
+      "createdHint": "O cadastro pode ser desfeito aqui.",
+      "undo": "Desfazer",
+      "undone": "Cadastro desfeito",
+      "updated": "Produto atualizado",
+      "deleted": "Produto excluído",
+      "newCode": "Código novo: cadastre o produto."
+    }
   },
   "errors": {
     "network": "Sem conexão com o servidor. Verifique a internet e tente de novo.",
@@ -54,6 +151,7 @@
     },
     "product": {
       "not_found": "Produto não encontrado.",
+      "in_use": "Este produto já tem histórico (estoque, desconto ou contagem). Desative em vez de excluir.",
       "name_invalid": "Dê um nome ao produto, com até 120 caracteres.",
       "price_negative": "O preço não pode ser negativo.",
       "minimum_stock_negative": "O estoque mínimo não pode ser negativo.",

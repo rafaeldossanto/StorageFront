@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatCents, parseCents } from './money'
+import { formatAmount, formatCents, parseCents } from './money'
 
 // Intl separates "R$" from the amount with a no-break space (U+00A0); the tests compare
 // the text as a person sees it.
@@ -42,5 +42,13 @@ describe('parseCents', () => {
 
   it.each(['', 'abc', '8,999', '1,2,3', '12.34.56', '-1', ',50'])('refuses "%s"', (typed) => {
     expect(parseCents(typed)).toBeNull()
+  })
+})
+
+describe('formatAmount', () => {
+  it('writes the amount the way parseCents reads it back', () => {
+    expect(formatAmount(899)).toBe('8,99')
+    expect(formatAmount(123456)).toBe('1.234,56')
+    expect(parseCents(formatAmount(123456))).toBe(123456)
   })
 })

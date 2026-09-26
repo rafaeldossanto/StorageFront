@@ -9,6 +9,19 @@
 // Created once at module load and reused, since building a formatter is not free.
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
+// Same digits without the currency symbol - what goes inside a price field that already
+// shows "R$" beside it.
+const amount = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+// 899 -> "8,99", 123456 -> "1.234,56"
+export function formatAmount(cents) {
+  if (!Number.isSafeInteger(cents)) {
+    throw new RangeError(`Expected a whole number of cents, got ${cents}.`)
+  }
+
+  return amount.format(cents / 100)
+}
+
 // 899 -> "R$ 8,99"
 export function formatCents(cents) {
   // There are no types to stop a caller passing 8.99 or "899", so the check happens at

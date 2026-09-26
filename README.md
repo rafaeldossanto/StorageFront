@@ -6,8 +6,27 @@ lojista abre no navegador, sem instalar nada.
 A API vive em [Storage](https://github.com/rafaeldossanto/Storage).
 
 - **React 19** em **JavaScript**, empacotado com **Vite 8**
+- **Tailwind CSS 4** + **shadcn/ui** (Radix por baixo, ícones Lucide, fontes Geist)
 - **i18next** para todo texto de tela, em português
-- **Vitest** para testes
+- **Vitest** + **Testing Library** para testes
+
+## Visual
+
+A referência é o Med Organizer: sidebar verde-floresta, página off-white, cards brancos,
+valores em fonte mono verde, âmbar na marca. E, mais que a cor, o jeito de usar:
+
+- **Um toque registra.** Bipar um código já age: código novo abre o cadastro preenchido,
+  código conhecido abre a edição.
+- **"Desfazer" em vez de "Tem certeza?"** — o toast da confirmação traz o botão, por 10 s.
+- **Edição no lugar.** O painel "Nesta sessão" deixa ajustar o preço ali mesmo, e salva
+  sozinho ao sair do campo.
+
+Todas as cores são variáveis em `src/index.css` (`--primary`, `--sidebar`, `--money`...),
+com um segundo conjunto para o modo escuro. Componente nenhum escreve uma cor direto.
+
+Os componentes em `src/components/ui/` vêm do shadcn (`npx shadcn@latest add <nome>`) e
+são código do projeto: dá para ler e mudar. Eles importam `cn` do pacote `cn`, do próprio
+shadcn, que junta classes do Tailwind.
 
 JavaScript e não TypeScript, por escolha: este front é onde o JavaScript está sendo
 aprendido. Os comentários do código explicam os conceitos da linguagem nos pontos em que
@@ -94,6 +113,10 @@ sem nunca passar por `parseFloat`.
 
 ## Estado
 
-Base pronta: cliente da API com sessão e renovação automática, mensagens em português
-para todos os códigos de erro da API, dinheiro, com testes. A tela inicial só mostra se o
-servidor está no ar — as telas de verdade esperam a escolha da biblioteca visual.
+Prontas: entrada (login e criação de loja) e **Produtos**, com cadastro por bipagem,
+busca por nome, categorias, paginação, edição, exclusão com "Desfazer" e o painel da
+sessão. Os testes da tela rodam num navegador simulado (jsdom): o arquivo pede isso com
+`// @vitest-environment jsdom` no topo.
+
+Próximas telas, na ordem do plano: categorias (arrastar para mover), regras de desconto,
+painel de vencimento, contagem pelo celular.

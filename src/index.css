@@ -1,48 +1,135 @@
-/* Placeholder styling. The visual identity waits for the choice of UI library, which is
-   still open; this only keeps the bare shell readable in both colour schemes. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+/* The look of Storage: a forest-green sidebar, a warm off-white page, white cards, soft
+   green highlights, an amber mark, and money set in a monospace green - the reference the
+   visual direction was taken from. Every colour is a variable here, so the components
+   never hard-code one and dark mode is only a second set of values. */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+  --color-money: var(--money);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
 
 :root {
-  color-scheme: light dark;
-  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
-  --ink: light-dark(#14181d, #eceee9);
-  --muted: light-dark(#5b626a, #a3aaaf);
-  --ground: light-dark(#f6f6f3, #131619);
-  --ok: light-dark(#1e6b44, #6fc7a5);
-  --bad: light-dark(#a3301f, #e08678);
-  color: var(--ink);
-  background: var(--ground);
+  --background: #f4f3ef;
+  --foreground: #16201c;
+  --card: #ffffff;
+  --card-foreground: #16201c;
+  --popover: #ffffff;
+  --popover-foreground: #16201c;
+  --primary: #1d5241;
+  --primary-foreground: #f3f8f5;
+  --secondary: #ebe9e3;
+  --secondary-foreground: #16201c;
+  --muted: #efede8;
+  --muted-foreground: #6b716c;
+  --accent: #e2eee8;
+  --accent-foreground: #1d5241;
+  --destructive: #b42318;
+  --border: #e3e1da;
+  --input: #dedbd3;
+  --ring: #1d5241;
+  --radius: 0.75rem;
+  --money: #1d5241;
+  --warning: #8a5a06;
+  --warning-soft: #f7ecd4;
+  --sidebar: #1b4639;
+  --sidebar-foreground: #d6e4dd;
+  --sidebar-primary: #e6a93c;
+  --sidebar-primary-foreground: #1b2a24;
+  --sidebar-accent: #275a4a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2b5747;
+  --sidebar-ring: #e6a93c;
 }
 
-body {
-  margin: 0;
+.dark {
+  --background: #111714;
+  --foreground: #e8eeea;
+  --card: #18201c;
+  --card-foreground: #e8eeea;
+  --popover: #1b2420;
+  --popover-foreground: #e8eeea;
+  --primary: #6fc7a5;
+  --primary-foreground: #0f1c16;
+  --secondary: #222c27;
+  --secondary-foreground: #e8eeea;
+  --muted: #1f2823;
+  --muted-foreground: #9aa6a0;
+  --accent: #1c3129;
+  --accent-foreground: #8fd9bc;
+  --destructive: #f0857a;
+  --border: #29332e;
+  --input: #34403a;
+  --ring: #6fc7a5;
+  --money: #8fd9bc;
+  --warning: #e3b061;
+  --warning-soft: #2e2616;
+  --sidebar: #0f2a21;
+  --sidebar-foreground: #c9d8d1;
+  --sidebar-primary: #e6a93c;
+  --sidebar-primary-foreground: #1b2a24;
+  --sidebar-accent: #1b3d31;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1d3a2f;
+  --sidebar-ring: #e6a93c;
 }
 
-.shell {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 64px 16px;
-}
-
-.shell h1 {
-  margin: 0 0 4px;
-  font-size: 2.25rem;
-  letter-spacing: -0.02em;
-}
-
-.tagline {
-  margin: 0 0 24px;
-  color: var(--muted);
-}
-
-.status {
-  font-size: 0.875rem;
-  color: var(--muted);
-}
-
-.status--online {
-  color: var(--ok);
-}
-
-.status--offline {
-  color: var(--bad);
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
 }
