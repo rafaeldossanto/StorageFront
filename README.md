@@ -79,6 +79,12 @@ em `src/i18n/pt-BR.json` — nunca escrito direto no componente.
 o `detail` que vem junto é texto técnico em inglês e não vai para a tela. Código ainda
 desconhecido cai na mensagem genérica, nunca aparece cru.
 
+**Leitor USB é um teclado rápido.** O leitor "digita" o código e aperta Enter, cada tecla
+a poucos milissegundos da anterior. `src/lib/scanner.js` separa essa rajada (menos de
+20 ms entre teclas, pelo menos 8 caracteres, terminando em Enter) da digitação de uma
+pessoa, para a tela agir na hora quando foi o leitor. Use sempre o `event.timeStamp` do
+evento, não `Date.now()`.
+
 **404 no código de barras é caminho normal.** Buscar um código que não existe é a deixa
 para abrir o cadastro já preenchido, não um erro.
 
