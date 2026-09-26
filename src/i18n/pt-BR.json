@@ -14,6 +14,9 @@
     "request": {
       "malformed": "Algo deu errado ao enviar os dados. Recarregue a página e tente de novo."
     },
+    "page": {
+      "invalid": "Página inválida: as páginas começam em 1 e mostram até 200 itens."
+    },
     "auth": {
       "unauthenticated": "Sua sessão expirou. Entre de novo.",
       "no_tenant": "Sua sessão expirou. Entre de novo.",
