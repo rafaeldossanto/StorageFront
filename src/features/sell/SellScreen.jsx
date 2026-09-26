@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { MinusIcon, PlusIcon, ScanBarcodeIcon, XIcon } from 'lucide-react'
-import { findByBarcode, searchProducts } from '@/api/catalog'
+import { MinusIcon, PlusIcon, XIcon } from 'lucide-react'
+import { findByBarcode } from '@/api/catalog'
 import { ApiError, errorMessage } from '@/api/errors'
 import { cancelSale, registerSale } from '@/api/sales'
 import { Monogram } from '@/components/Monogram'
+import { ProductSearchField } from '@/components/ProductSearchField'
 import { Button } from '@/components/ui/button'
-import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import { useScanner } from '@/hooks/useScanner'
 import { unitsFor } from '@/lib/barcode'
 import { formatCents } from '@/lib/money'
 import { cn } from '@/lib/utils'
 import { useCart } from './useCart'
-
-const TYPED_BARCODE = /^\d{8,14}$/
 
 const timeOf = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' })
 
@@ -25,33 +23,11 @@ export function SellScreen() {
   const { t } = useTranslation()
   const cart = useCart()
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
   const [busy, setBusy] = useState(false)
   const [recent, setRecent] = useState([])
   const [problemId, setProblemId] = useState(null)
 
-  const search = useDebouncedValue(query.trim())
-  const searching = search !== '' && !TYPED_BARCODE.test(search)
-
   useScanner(scan)
-
-  useEffect(() => {
-    if (!searching) {
-      return undefined
-    }
-
-    const controller = new AbortController()
-
-    searchProducts({ search, pageSize: 8 }, { signal: controller.signal })
-      .then((page) => setResults(page.items))
-      .catch((error) => {
-        if (!controller.signal.aborted) {
-          toast.error(errorMessage(t, error))
-        }
-      })
-
-    return () => controller.abort()
-  }, [search, searching, t])
 
   async function scan(code) {
     setQuery('')
@@ -63,12 +39,6 @@ export function SellScreen() {
     } catch (error) {
       toast.error(error instanceof ApiError && error.isNotFound ? t('sell.unknownCode') : errorMessage(t, error))
     }
-  }
-
-  function pick(product) {
-    cart.add(product, 1)
-    setQuery('')
-    setResults([])
   }
 
   async function finish() {
@@ -119,47 +89,13 @@ export function SellScreen() {
           </span>
         </header>
 
-        <div className="relative">
-          <label className="flex h-12 items-center gap-3 rounded-xl border bg-card px-4 shadow-xs transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/25">
-            <ScanBarcodeIcon className="size-5 text-muted-foreground" />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' && TYPED_BARCODE.test(query.trim())) {
-                  event.preventDefault()
-                  scan(query.trim())
-                }
-              }}
-              placeholder={t('sell.scanPlaceholder')}
-              aria-label={t('sell.scanPlaceholder')}
-              autoComplete="off"
-              className="h-full flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
-            />
-          </label>
-
-          {searching && (
-            <ul className="absolute inset-x-0 top-14 z-10 grid gap-0.5 rounded-xl border bg-popover p-1.5 shadow-md">
-              {results.length === 0 ? (
-                <li className="px-3 py-2 text-sm text-muted-foreground">{t('sell.noResults', { term: search })}</li>
-              ) : (
-                results.map((product) => (
-                  <li key={product.id}>
-                    <button
-                      type="button"
-                      onClick={() => pick(product)}
-                      className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm hover:bg-muted"
-                    >
-                      <Monogram name={product.name} className="size-7" />
-                      <span className="flex-1 truncate">{product.name}</span>
-                      <span className="font-mono text-money tabular-nums">{formatCents(product.salePriceCents)}</span>
-                    </button>
-                  </li>
-                ))
-              )}
-            </ul>
-          )}
-        </div>
+        <ProductSearchField
+          query={query}
+          onQueryChange={setQuery}
+          onCode={scan}
+          onPick={(product) => cart.add(product, 1)}
+          placeholder={t('sell.scanPlaceholder')}
+        />
 
         {cart.items.length === 0 ? (
           <p className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">{t('sell.empty')}</p>

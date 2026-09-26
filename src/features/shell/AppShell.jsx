@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useTheme } from 'next-themes'
 import { NavLink } from 'react-router'
-import { ChartColumnIcon, LogOutIcon, MoonIcon, PackageIcon, ShoppingCartIcon, SunIcon } from 'lucide-react'
+import { ChartColumnIcon, LogOutIcon, MoonIcon, PackageIcon, PackagePlusIcon, ShoppingCartIcon, SunIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BrandMark } from './BrandMark'
 
@@ -23,8 +23,11 @@ export function AppShell({ account, onSignOut, children }) {
           <span className="text-[15px] font-semibold text-white">{t('app.name')}</span>
         </div>
 
-        <nav className="flex gap-1 px-3 md:flex-col">
+        {/* On a phone the sections are a row that scrolls sideways - more of them than fit
+            the width - instead of a row that pushes the whole page wider. */}
+        <nav className="flex gap-1 overflow-x-auto px-3 pb-3 [scrollbar-width:none] md:flex-col md:overflow-visible md:pb-0">
           <SidebarItem to="/produtos" icon={PackageIcon} label={t('shell.products')} />
+          <SidebarItem to="/entrada" icon={PackagePlusIcon} label={t('shell.receiving')} />
           <SidebarItem to="/vender" icon={ShoppingCartIcon} label={t('shell.sell')} />
           <SidebarItem to="/vendas" icon={ChartColumnIcon} label={t('shell.sales')} />
         </nav>
@@ -78,7 +81,7 @@ function SidebarItem({ to, icon: Icon, label }) {
       to={to}
       className={({ isActive }) =>
         cn(
-          'flex h-9 items-center gap-2.5 rounded-lg px-3 text-sm font-medium transition-colors',
+          'flex h-9 shrink-0 items-center gap-2.5 rounded-lg px-3 text-sm font-medium transition-colors',
           isActive ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'hover:bg-sidebar-accent/60',
         )
       }

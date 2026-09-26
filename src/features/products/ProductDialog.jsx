@@ -62,7 +62,7 @@ function ProductForm({ product, barcode, categories, defaultCategoryId, onSubmit
     barcode: barcode ?? '',
     name: product?.name ?? '',
     categoryId: product?.categoryId ?? defaultCategoryId ?? '',
-    priceCents: product?.salePriceCents ?? null,
+    salePriceCents: product?.salePriceCents ?? null,
     baseUnit: product?.baseUnit ?? 'Unit',
     minimumStock: product?.minimumStock ?? 0,
     tracksExpiry: product?.tracksExpiry ?? true,
@@ -81,7 +81,7 @@ function ProductForm({ product, barcode, categories, defaultCategoryId, onSubmit
     // A <form> would reload the page on submit; preventDefault keeps it a single-page app.
     event.preventDefault()
 
-    if (fields.priceCents === null) {
+    if (fields.salePriceCents === null) {
       setShowPriceError(true)
       return
     }
@@ -187,9 +187,9 @@ function ProductForm({ product, barcode, categories, defaultCategoryId, onSubmit
           <Label htmlFor={`${id}-price`}>{t('products.form.price')}</Label>
           <MoneyInput
             id={`${id}-price`}
-            cents={fields.priceCents}
+            cents={fields.salePriceCents}
             onCentsChange={(cents) => {
-              set('priceCents')(cents)
+              set('salePriceCents')(cents)
               setShowPriceError(false)
             }}
             invalid={showPriceError}
@@ -285,7 +285,7 @@ function ProductForm({ product, barcode, categories, defaultCategoryId, onSubmit
           {t('products.form.perUnit', { unit: t(`products.form.unitWords.${fields.baseUnit}`) })}
         </span>
         <span className="font-mono text-base font-semibold tabular-nums">
-          {fields.priceCents === null ? '—' : formatCents(fields.priceCents)}
+          {fields.salePriceCents === null ? '—' : formatCents(fields.salePriceCents)}
         </span>
       </div>
 

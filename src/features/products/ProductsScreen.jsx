@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { PlusIcon, ScanBarcodeIcon, XIcon } from 'lucide-react'
 import {
+  activeCategories,
   createProduct,
   deleteProduct,
   findByBarcode,
@@ -15,14 +16,12 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import { useScanner } from '@/hooks/useScanner'
+import { isTypedBarcode } from '@/lib/barcode'
 import { cn } from '@/lib/utils'
 import { ProductCard } from './ProductCard'
 import { ProductDialog } from './ProductDialog'
 import { SessionPanel } from './SessionPanel'
 import { useProductList } from './useProductList'
-
-// Digits only, as long as a product barcode can be: what was typed is a code, not a name.
-const TYPED_BARCODE = /^\d{8,14}$/
 
 // Products and registration by scanning.
 //
@@ -40,12 +39,12 @@ export function ProductsScreen() {
   const [highlightId, setHighlightId] = useState(null)
 
   const search = useDebouncedValue(query.trim())
-  const searching = search !== '' && !TYPED_BARCODE.test(search)
+  const searching = search !== '' && !isTypedBarcode(search)
   const list = useProductList({ categoryId, search: searching ? search : '' })
 
   // useMemo recomputes only when `tree` changes, not on every keystroke in the search box.
-  const categories = useMemo(() => flattenCategories(activeOnly(tree)), [tree])
-  const roots = useMemo(() => activeOnly(tree), [tree])
+  const categories = useMemo(() => flattenCategories(activeCategories(tree)), [tree])
+  const roots = useMemo(() => activeCategories(tree), [tree])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -54,7 +53,7 @@ export function ProductsScreen() {
       .then((loaded) => {
         setTree(loaded)
         // The first branch is open from the start, so the grid is never an empty page.
-        setCategoryId((current) => current ?? activeOnly(loaded)[0]?.id ?? null)
+        setCategoryId((current) => current ?? activeCategories(loaded)[0]?.id ?? null)
       })
       .catch((error) => {
         if (!controller.signal.aborted) {
@@ -96,15 +95,7 @@ export function ProductsScreen() {
   }
 
   async function register(fields) {
-    const product = await createProduct({
-      barcode: fields.barcode,
-      name: fields.name,
-      categoryId: fields.categoryId,
-      salePriceCents: fields.priceCents,
-      baseUnit: fields.baseUnit,
-      minimumStock: fields.minimumStock,
-      tracksExpiry: fields.tracksExpiry,
-    })
+    const product = await createProduct(fields)
 
     setDialog({ open: false })
     touch(product)
@@ -130,13 +121,7 @@ export function ProductsScreen() {
   }
 
   async function save(product, fields) {
-    const updated = await updateProduct(product.id, {
-      name: fields.name,
-      categoryId: fields.categoryId,
-      salePriceCents: fields.priceCents,
-      minimumStock: fields.minimumStock,
-      tracksExpiry: fields.tracksExpiry,
-    })
+    const updated = await updateProduct(product.id, fields)
 
     setDialog({ open: false })
     touch(updated)
@@ -185,7 +170,7 @@ export function ProductsScreen() {
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={(event) => {
               // A code typed by hand, digit by digit, finished with Enter.
-              if (event.key === 'Enter' && TYPED_BARCODE.test(query.trim())) {
+              if (event.key === 'Enter' && isTypedBarcode(query.trim())) {
                 event.preventDefault()
                 lookUp(query.trim())
               }
@@ -290,13 +275,6 @@ export function ProductsScreen() {
       />
     </div>
   )
-}
-
-// Deactivated categories take no new products, so the screen never offers them.
-function activeOnly(nodes) {
-  return nodes
-    .filter((node) => node.active)
-    .map((node) => ({ ...node, children: activeOnly(node.children ?? []) }))
 }
 
 // Whether `candidateId` is `branchId` itself or anywhere under it.

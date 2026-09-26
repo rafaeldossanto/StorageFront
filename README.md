@@ -117,6 +117,12 @@ Prontas, cada uma no seu endereço:
 
 - **`/produtos`**: cadastro por bipagem, busca por nome, categorias, paginação, edição,
   exclusão com "Desfazer" e o painel da sessão.
+- **`/entrada`**: entrada de mercadoria. Bipe o que chegou: o mesmo código soma na linha,
+  o fardo vira linha própria (com o custo por unidade ao lado), o cursor vai direto para o
+  custo e a validade é pedida só para quem controla. "Outra validade" divide a linha. Um
+  código desconhecido abre o cadastro ali mesmo, e o fornecedor novo também é cadastrado
+  sem sair da nota. A entrada pode ser desfeita por 10 minutos, enquanto nada dela saiu
+  do estoque.
 - **`/vender`**: caixa simples. O fardo bipado conta as unidades dele, o preço já vem com
   desconto, "Concluir venda" baixa o estoque, e a venda pode ser desfeita por 10 minutos.
 - **`/vendas`**: trancada por PIN, como o de um computador. O dono cria o PIN, digitado
@@ -129,7 +135,9 @@ validadas como par contra o fundo do card nos dois temas: faixa de luminosidade,
 contraste e separação para daltônicos.
 
 Os testes das telas rodam num navegador simulado (jsdom): o arquivo pede isso com
-`// @vitest-environment jsdom` no topo.
+`// @vitest-environment jsdom` no topo. Para bipar num teste, use `scan()` de
+`src/test/scan.js`: ele marca o horário de cada tecla, e o teste não depende de a máquina
+estar livre para a rajada caber nos 20 ms que separam leitor de pessoa.
 
-Próximas telas, na ordem do plano: categorias (arrastar para mover), regras de desconto,
-painel de vencimento, contagem pelo celular.
+Próximas telas, na ordem do plano: estoque, equipe, categorias (arrastar para mover),
+regras de desconto, painel de vencimento, contagem pelo celular.

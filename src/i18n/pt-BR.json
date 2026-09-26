@@ -9,8 +9,12 @@
   "status": {
     "retry": "Tentar de novo"
   },
+  "search": {
+    "noResults": "Nenhum produto com “{{term}}”."
+  },
   "shell": {
     "products": "Produtos",
+    "receiving": "Entrada",
     "sell": "Vender",
     "sales": "Vendas",
     "dark": "Escuro",
@@ -119,7 +123,6 @@
     "remove": "Tirar {{name}} da venda",
     "decrease": "Diminuir {{name}}",
     "increase": "Aumentar {{name}}",
-    "noResults": "Nenhum produto com “{{term}}”.",
     "unknownCode": "Código não cadastrado. Cadastre o produto em Produtos.",
     "total": "Total",
     "finish": "Concluir venda",
@@ -134,6 +137,71 @@
       "soldHint": "{{total}} · {{items}}",
       "undo": "Desfazer",
       "undone": "Venda desfeita"
+    }
+  },
+  "receiving": {
+    "title": "Entrada de mercadoria",
+    "subtitle": "Bipe o que chegou e confira o custo de cada item na nota.",
+    "scanPlaceholder": "Bipe um código ou digite o nome",
+    "items_zero": "Nenhum item",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} itens",
+    "units_zero": "Nenhuma unidade",
+    "units_one": "{{count}} unidade",
+    "units_other": "{{count}} unidades",
+    "empty": "Bipe o primeiro produto da nota. Um código novo abre o cadastro na hora.",
+    "productCreated": "Produto cadastrado e incluído na entrada",
+    "details": "Dados da nota",
+    "invoice": "Número da nota",
+    "invoiceShort": "NF {{number}}",
+    "note": "Observação",
+    "total": "Total da nota",
+    "missingCost_one": "Falta o custo de {{count}} item.",
+    "missingCost_other": "Falta o custo de {{count}} itens.",
+    "submit": "Dar entrada",
+    "clear": "Limpar",
+    "fix_one": "Confira o item destacado.",
+    "fix_other": "Confira os {{count}} itens destacados.",
+    "lineProblem": "{{name}}: {{message}}",
+    "recent": "Últimas entradas",
+    "recentEmpty": "As entradas registradas aparecem aqui. Dá para desfazer por 10 minutos, enquanto nada delas tiver saído do estoque.",
+    "undo": "Desfazer",
+    "cancelled": "Desfeita",
+    "line": {
+      "unit": "Unidade",
+      "pack": "Embalagem com {{count}} unidades",
+      "namedPack": "{{name}} · {{count}} unidades",
+      "remove": "Tirar {{name}} da entrada",
+      "decrease": "Diminuir {{name}}",
+      "increase": "Aumentar {{name}}",
+      "quantity": "Quantidade",
+      "unitCost": "Custo unitário",
+      "packCost": "Custo da embalagem",
+      "perUnit": "{{price}} por unidade",
+      "expiry": "Validade",
+      "noExpiry": "Não controla validade",
+      "units_one": "{{count}} unidade",
+      "units_other": "{{count}} unidades",
+      "total": "Total",
+      "split": "Outra validade"
+    },
+    "supplier": {
+      "label": "Fornecedor",
+      "none": "Sem fornecedor",
+      "new": "Novo fornecedor",
+      "newTitle": "Novo fornecedor",
+      "newHint": "Só o nome é obrigatório.",
+      "name": "Nome",
+      "taxId": "CNPJ ou CPF",
+      "contact": "Contato",
+      "create": "Cadastrar",
+      "created": "Fornecedor cadastrado"
+    },
+    "toast": {
+      "received": "Entrada registrada",
+      "receivedHint": "{{total}} · {{items}}",
+      "undo": "Desfazer",
+      "undone": "Entrada desfeita"
     }
   },
   "sales": {
@@ -279,6 +347,9 @@
       "quantity_invalid": "Informe pelo menos 1 unidade em cada item.",
       "expiry_required": "Este produto controla validade: informe a data.",
       "already_expired": "A validade informada já passou.",
+      "not_received": "Esta entrada já foi desfeita.",
+      "cancel_window_closed": "Passaram os 10 minutos: esta entrada não pode mais ser desfeita.",
+      "stock_moved": "Parte desta mercadoria já saiu do estoque (venda, perda ou ajuste): a entrada não pode mais ser desfeita.",
       "field_too_long": "Texto longo demais: o número da nota vai até 30 caracteres e a observação até 200."
     },
     "count": {

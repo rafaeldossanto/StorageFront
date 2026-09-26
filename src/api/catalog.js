@@ -25,8 +25,9 @@ export function searchProducts({ search, page = 1, pageSize = 24 }, options) {
   return api.get('/api/products', { ...options, query: { search, page, pageSize } })
 }
 
-export function createProduct(product) {
-  return api.post('/api/products', product)
+// ProductDialog hands its fields over in this same shape, so a screen passes them straight on.
+export function createProduct({ barcode, name, categoryId, salePriceCents, baseUnit, minimumStock, tracksExpiry }) {
+  return api.post('/api/products', { barcode, name, categoryId, salePriceCents, baseUnit, minimumStock, tracksExpiry })
 }
 
 // The API takes the whole editable set each time, not only what changed.
@@ -57,4 +58,11 @@ export function flattenCategories(tree) {
 
   visit(tree, [])
   return flat
+}
+
+// The tree without deactivated categories: they take no new products, so no screen offers them.
+export function activeCategories(nodes) {
+  return nodes
+    .filter((node) => node.active)
+    .map((node) => ({ ...node, children: activeCategories(node.children ?? []) }))
 }
