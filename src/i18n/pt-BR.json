@@ -1,0 +1,45 @@
+{
+  "app": {
+    "name": "Storage",
+    "tagline": "Gestão de estoque para o seu mercado"
+  },
+  "status": {
+    "checking": "Conectando ao servidor…",
+    "online": "Servidor conectado",
+    "offline": "Servidor fora do ar"
+  },
+  "errors": {
+    "network": "Sem conexão com o servidor. Verifique a internet e tente de novo.",
+    "unknown": "Algo deu errado do nosso lado. Tente de novo em instantes.",
+    "auth": {
+      "no_tenant": "Sua sessão expirou. Entre de novo."
+    },
+    "barcode": {
+      "invalid": "Código de barras inválido. Confira os números ou bipe de novo.",
+      "taken": "Este código de barras já está cadastrado em outro produto."
+    },
+    "category": {
+      "not_found": "Categoria não encontrada.",
+      "parent_not_found": "A categoria de cima não existe mais.",
+      "name_taken": "Já existe uma categoria com esse nome neste nível.",
+      "name_invalid": "Dê um nome à categoria, com até 60 caracteres.",
+      "move_into_own_branch": "Uma categoria não pode ficar dentro dela mesma.",
+      "move_across_shops": "Essa categoria não pertence à sua loja."
+    },
+    "product": {
+      "not_found": "Produto não encontrado.",
+      "name_invalid": "Dê um nome ao produto, com até 120 caracteres.",
+      "price_negative": "O preço não pode ser negativo.",
+      "cost_negative": "O custo não pode ser negativo.",
+      "minimum_stock_negative": "O estoque mínimo não pode ser negativo.",
+      "barcode_repeated": "Este produto já tem esse código de barras.",
+      "barcode_not_on_product": "Esse código de barras não é deste produto.",
+      "default_packaging_required": "A embalagem principal não pode ser removida: o estoque é contado nela."
+    },
+    "packaging": {
+      "not_found": "Embalagem não encontrada.",
+      "factor_invalid": "Uma embalagem precisa ter pelo menos 1 unidade.",
+      "name_invalid": "O nome da embalagem pode ter até 40 caracteres."
+    }
+  }
+}

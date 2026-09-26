@@ -1,0 +1,48 @@
+/* Placeholder styling. The visual identity waits for the choice of UI library, which is
+   still open; this only keeps the bare shell readable in both colour schemes. */
+
+:root {
+  color-scheme: light dark;
+  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  --ink: light-dark(#14181d, #eceee9);
+  --muted: light-dark(#5b626a, #a3aaaf);
+  --ground: light-dark(#f6f6f3, #131619);
+  --ok: light-dark(#1e6b44, #6fc7a5);
+  --bad: light-dark(#a3301f, #e08678);
+  color: var(--ink);
+  background: var(--ground);
+}
+
+body {
+  margin: 0;
+}
+
+.shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 16px;
+}
+
+.shell h1 {
+  margin: 0 0 4px;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.status {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.status--online {
+  color: var(--ok);
+}
+
+.status--offline {
+  color: var(--bad);
+}
