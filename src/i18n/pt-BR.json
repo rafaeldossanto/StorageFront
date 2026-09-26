@@ -11,6 +11,8 @@
   },
   "shell": {
     "products": "Produtos",
+    "sell": "Vender",
+    "sales": "Vendas",
     "dark": "Escuro",
     "light": "Claro",
     "signOut": "Sair",
@@ -105,6 +107,96 @@
       "newCode": "Código novo: cadastre o produto."
     }
   },
+  "sell": {
+    "title": "Vender",
+    "subtitle": "Bipe os produtos da venda.",
+    "scanPlaceholder": "Bipe um código ou digite o nome",
+    "items_zero": "Nenhum item",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} itens",
+    "empty": "Bipe o primeiro produto para começar a venda.",
+    "each": "{{price}} cada",
+    "remove": "Tirar {{name}} da venda",
+    "decrease": "Diminuir {{name}}",
+    "increase": "Aumentar {{name}}",
+    "noResults": "Nenhum produto com “{{term}}”.",
+    "unknownCode": "Código não cadastrado. Cadastre o produto em Produtos.",
+    "total": "Total",
+    "finish": "Concluir venda",
+    "clear": "Limpar",
+    "lineProblem": "{{name}}: {{message}}",
+    "recent": "Vendas de agora",
+    "recentEmpty": "As vendas concluídas aparecem aqui. Dá para desfazer por 10 minutos.",
+    "undo": "Desfazer",
+    "cancelled": "Desfeita",
+    "toast": {
+      "sold": "Venda registrada",
+      "soldHint": "{{total}} · {{items}}",
+      "undo": "Desfazer",
+      "undone": "Venda desfeita"
+    }
+  },
+  "sales": {
+    "title": "Vendas",
+    "subtitle": "O que foi vendido, quanto custou e quanto sobrou.",
+    "periods": {
+      "Day": "Dia",
+      "Month": "Mês",
+      "Year": "Ano"
+    },
+    "previous": "Período anterior",
+    "next": "Próximo período",
+    "today": "Hoje",
+    "lock": "Bloquear",
+    "changePin": "Alterar PIN",
+    "tiles": {
+      "revenue": "Vendido",
+      "cost": "Custo das mercadorias",
+      "net": "Líquido",
+      "margin": "margem de {{percent}}",
+      "sales": "Vendas",
+      "units_one": "{{count}} item vendido",
+      "units_other": "{{count}} itens vendidos"
+    },
+    "chart": {
+      "title_Day": "Vendido e líquido por hora",
+      "title_Month": "Vendido e líquido por dia",
+      "title_Year": "Vendido e líquido por mês",
+      "revenue": "Vendido",
+      "net": "Líquido",
+      "showTable": "Ver como tabela",
+      "showChart": "Ver gráfico",
+      "period": "Período",
+      "count": "Vendas",
+      "salesCount_zero": "Nenhuma venda",
+      "salesCount_one": "{{count}} venda",
+      "salesCount_other": "{{count}} vendas"
+    },
+    "products": {
+      "title": "Produtos vendidos",
+      "name": "Produto",
+      "units": "Qtd.",
+      "revenue": "Vendido",
+      "cost": "Custo",
+      "net": "Líquido",
+      "empty": "Nenhuma venda neste período."
+    },
+    "pin": {
+      "title": "Área de vendas",
+      "unlockHint": "Digite o PIN para ver as vendas.",
+      "createTitle": "Crie o PIN de vendas",
+      "createHint": "De 4 a 8 números. Quem souber o PIN vê as vendas, o custo e o lucro.",
+      "confirmHint": "Digite o mesmo PIN de novo para confirmar.",
+      "mismatch": "Os PINs não conferem. Comece de novo.",
+      "missing": "O dono ainda não criou o PIN de vendas.",
+      "digit": "Número {{digit}}",
+      "erase": "Apagar",
+      "enter": "Entrar",
+      "entered_one": "{{count}} número digitado",
+      "entered_other": "{{count}} números digitados",
+      "saved": "PIN de vendas salvo"
+    }
+  },
   "errors": {
     "network": "Sem conexão com o servidor. Verifique a internet e tente de novo.",
     "unknown": "Algo deu errado do nosso lado. Tente de novo em instantes.",
@@ -166,7 +258,8 @@
     },
     "batch": {
       "quantity_invalid": "Um lote precisa ter pelo menos 1 unidade.",
-      "cost_negative": "O custo não pode ser negativo."
+      "cost_negative": "O custo não pode ser negativo.",
+      "expired": "O lote de onde a mercadoria saiu já venceu; a venda não pode ser desfeita."
     },
     "stock": {
       "insufficient": "Não há estoque suficiente para isso.",
@@ -208,6 +301,23 @@
     },
     "report": {
       "period_invalid": "Escolha um período de 1 a 366 dias, com o início antes do fim."
+    },
+    "sale": {
+      "not_found": "Venda não encontrada.",
+      "empty": "A venda precisa ter pelo menos um produto.",
+      "too_many_lines": "Uma venda pode ter até 200 produtos diferentes.",
+      "quantity_invalid": "A quantidade de cada produto vai de 1 a 100.000.",
+      "not_completed": "Esta venda já foi desfeita.",
+      "cancel_window_closed": "Passaram os 10 minutos: esta venda não pode mais ser desfeita."
+    },
+    "sales": {
+      "locked": "A área de vendas fechou. Digite o PIN de novo.",
+      "period_invalid": "Escolha um dia, mês ou ano entre 2000 e 2100.",
+      "pin_not_set": "O dono ainda não criou o PIN de vendas.",
+      "pin_wrong": "PIN incorreto.",
+      "pin_locked": "Muitos PINs errados. A área de vendas ficou bloqueada por 15 minutos.",
+      "pin_format": "O PIN tem de 4 a 8 números.",
+      "pin_busy": "Alguém digitou o PIN ao mesmo tempo. Tente de novo."
     }
   }
 }

@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { onSessionChange, restoreSession, signOut } from '@/api/session'
 import { Button } from '@/components/ui/button'
 import { AuthScreen } from '@/features/auth/AuthScreen'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { ProductsScreen } from '@/features/products/ProductsScreen'
+import { SalesScreen } from '@/features/sales/SalesScreen'
+import { SellScreen } from '@/features/sell/SellScreen'
 import { AppShell } from '@/features/shell/AppShell'
 import { BrandMark } from '@/features/shell/BrandMark'
 
@@ -37,9 +40,18 @@ export default function App() {
   switch (session.status) {
     case 'signed-in':
       return (
-        <AppShell account={session.account} onSignOut={() => signOut().catch(() => {})}>
-          <ProductsScreen />
-        </AppShell>
+        // The address picks the screen: /produtos, /vender, /vendas. Anything else lands
+        // on products, the screen the day starts with.
+        <BrowserRouter>
+          <AppShell account={session.account} onSignOut={() => signOut().catch(() => {})}>
+            <Routes>
+              <Route path="/produtos" element={<ProductsScreen />} />
+              <Route path="/vender" element={<SellScreen />} />
+              <Route path="/vendas" element={<SalesScreen account={session.account} />} />
+              <Route path="*" element={<Navigate to="/produtos" replace />} />
+            </Routes>
+          </AppShell>
+        </BrowserRouter>
       )
     case 'signed-out':
       return <AuthScreen />

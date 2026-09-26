@@ -37,7 +37,14 @@ export class ApiError extends Error {
     const code = typeof body?.code === 'string' ? body.code : UNKNOWN_ERROR
     const detail = typeof body?.detail === 'string' ? body.detail : undefined
 
-    return new ApiError(status, code, detail)
+    const error = new ApiError(status, code, detail)
+
+    // Which line of a multi-line request was refused - a receipt, a sale - counted from 1.
+    if (Number.isInteger(body?.line)) {
+      error.line = body.line
+    }
+
+    return error
   }
 
   // The request never got an answer: offline, DNS, CORS, server down.

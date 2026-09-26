@@ -22,6 +22,19 @@ export function formatAmount(cents) {
   return amount.format(cents / 100)
 }
 
+// Short amounts for chart axes, where space is tight: 123456 -> "R$ 1,2 mil".
+// Dividing by 100 here is fine: the result is only ever shown, never added up.
+const compact = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+  notation: 'compact',
+  maximumFractionDigits: 1,
+})
+
+export function formatCompactCents(cents) {
+  return compact.format(cents / 100)
+}
+
 // 899 -> "R$ 8,99"
 export function formatCents(cents) {
   // There are no types to stop a caller passing 8.99 or "899", so the check happens at

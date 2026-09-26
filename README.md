@@ -113,9 +113,22 @@ sem nunca passar por `parseFloat`.
 
 ## Estado
 
-Prontas: entrada (login e criação de loja) e **Produtos**, com cadastro por bipagem,
-busca por nome, categorias, paginação, edição, exclusão com "Desfazer" e o painel da
-sessão. Os testes da tela rodam num navegador simulado (jsdom): o arquivo pede isso com
+Prontas, cada uma no seu endereço:
+
+- **`/produtos`**: cadastro por bipagem, busca por nome, categorias, paginação, edição,
+  exclusão com "Desfazer" e o painel da sessão.
+- **`/vender`**: caixa simples. O fardo bipado conta as unidades dele, o preço já vem com
+  desconto, "Concluir venda" baixa o estoque, e a venda pode ser desfeita por 10 minutos.
+- **`/vendas`**: trancada por PIN, como o de um computador. O dono cria o PIN, digitado
+  duas vezes; qualquer um da equipe abre com ele por 15 minutos. Mostra vendido, custo,
+  líquido e margem do dia, mês ou ano, um gráfico (colunas para o vendido, linha para o
+  líquido, com tabela equivalente) e os produtos vendidos.
+
+As cores do gráfico (`--chart-revenue` e `--chart-net`, em `src/index.css`) foram
+validadas como par contra o fundo do card nos dois temas: faixa de luminosidade, croma,
+contraste e separação para daltônicos.
+
+Os testes das telas rodam num navegador simulado (jsdom): o arquivo pede isso com
 `// @vitest-environment jsdom` no topo.
 
 Próximas telas, na ordem do plano: categorias (arrastar para mover), regras de desconto,

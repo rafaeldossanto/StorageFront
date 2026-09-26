@@ -76,6 +76,10 @@
   --money: #1d5241;
   --warning: #8a5a06;
   --warning-soft: #f7ecd4;
+  /* Sales chart: validated as a pair on the card surface (lightness, chroma, contrast,
+     colour-blind separation ΔE 10.2). */
+  --chart-revenue: #0e8770;
+  --chart-net: #c27a14;
   --sidebar: #1b4639;
   --sidebar-foreground: #d6e4dd;
   --sidebar-primary: #e6a93c;
@@ -108,6 +112,9 @@
   --money: #8fd9bc;
   --warning: #e3b061;
   --warning-soft: #2e2616;
+  /* The same pair stepped for the dark card (ΔE 10.7). */
+  --chart-revenue: #2a9d82;
+  --chart-net: #b98325;
   --sidebar: #0f2a21;
   --sidebar-foreground: #c9d8d1;
   --sidebar-primary: #e6a93c;

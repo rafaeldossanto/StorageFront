@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useTheme } from 'next-themes'
-import { LogOutIcon, MoonIcon, PackageIcon, SunIcon } from 'lucide-react'
+import { NavLink } from 'react-router'
+import { ChartColumnIcon, LogOutIcon, MoonIcon, PackageIcon, ShoppingCartIcon, SunIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BrandMark } from './BrandMark'
 
@@ -23,7 +24,9 @@ export function AppShell({ account, onSignOut, children }) {
         </div>
 
         <nav className="flex gap-1 px-3 md:flex-col">
-          <SidebarItem icon={PackageIcon} label={t('shell.products')} active />
+          <SidebarItem to="/produtos" icon={PackageIcon} label={t('shell.products')} />
+          <SidebarItem to="/vender" icon={ShoppingCartIcon} label={t('shell.sell')} />
+          <SidebarItem to="/vendas" icon={ChartColumnIcon} label={t('shell.sales')} />
         </nav>
 
         <div className="mt-auto hidden border-t border-sidebar-border px-4 py-4 md:block">
@@ -66,17 +69,22 @@ export function AppShell({ account, onSignOut, children }) {
 
 // A component received as a prop is used like any tag once it has a capitalised name -
 // that is why `icon` is renamed to `Icon` on the way in.
-function SidebarItem({ icon: Icon, label, active }) {
+//
+// NavLink is a link that knows whether its address is the current one: it sets
+// aria-current="page" on its own, and passes `isActive` to a className function.
+function SidebarItem({ to, icon: Icon, label }) {
   return (
-    <span
-      aria-current={active ? 'page' : undefined}
-      className={cn(
-        'flex h-9 items-center gap-2.5 rounded-lg px-3 text-sm font-medium',
-        active ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'hover:bg-sidebar-accent/60',
-      )}
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        cn(
+          'flex h-9 items-center gap-2.5 rounded-lg px-3 text-sm font-medium transition-colors',
+          isActive ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'hover:bg-sidebar-accent/60',
+        )
+      }
     >
       <Icon className="size-4" />
       {label}
-    </span>
+    </NavLink>
   )
 }
