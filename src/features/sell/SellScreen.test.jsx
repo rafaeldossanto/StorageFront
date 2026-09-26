@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
 
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Toaster } from '@/components/ui/sonner'
 import { i18nReady } from '@/i18n'
 import { fakeApi, requestsMade } from '@/test/fakeApi'
+import { scan } from '@/test/scan'
 import { SellScreen } from './SellScreen'
 
 const drink = {
@@ -21,15 +22,6 @@ const drink = {
     { id: 'can', gtin: '07891000000014', displayGtin: '7891000000014', name: null, conversionFactor: 1, isDefault: true },
     { id: 'pack', gtin: '17891000000011', displayGtin: '17891000000011', name: 'Fardo 12', conversionFactor: 12, isDefault: false },
   ],
-}
-
-// A reader types the code in a burst and presses Enter - see useScanner.
-function scan(code) {
-  act(() => {
-    for (const key of [...code, 'Enter']) {
-      document.body.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }))
-    }
-  })
 }
 
 function renderScreen() {

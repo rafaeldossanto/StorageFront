@@ -4,11 +4,12 @@
 // screen needs a document to draw into, while the other tests run in plain Node.
 
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react'
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Toaster } from '@/components/ui/sonner'
 import { i18nReady } from '@/i18n'
 import { fakeApi, requestsMade } from '@/test/fakeApi'
+import { scan } from '@/test/scan'
 import { ProductsScreen } from './ProductsScreen'
 
 const beverages = { id: 'cat-bebidas', name: 'Bebidas', depth: 0, active: true, children: [] }
@@ -27,16 +28,6 @@ function productFrom(body, id = 'prod-1') {
     createdAt: '2026-09-26T12:00:00Z',
     updatedAt: null,
   }
-}
-
-// A barcode reader is a keyboard that types very fast: every key within a millisecond or
-// two, then Enter. Dispatching the events back to back reproduces exactly that.
-function scan(code) {
-  act(() => {
-    for (const key of [...code, 'Enter']) {
-      document.body.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }))
-    }
-  })
 }
 
 function renderScreen() {
