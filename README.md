@@ -35,9 +35,32 @@ lugar sem mexer no arquivo versionado, crie um `.env.development.local`. Use só
 
 ## Cliente da API
 
-`src/api/client.js` é o único lugar que fala HTTP com a API, escrito sobre o `fetch` do
-próprio navegador, sem biblioteca. As telas chamam `api.get`, `api.post`... e recebem os
-dados, ou um `ApiError`.
+As telas chamam `api.get`, `api.post`... de `src/api/client.js` e recebem os dados, ou um
+`ApiError`. Por baixo são três arquivos, todos sobre o `fetch` do próprio navegador, sem
+biblioteca:
+
+| Arquivo | Papel |
+| --- | --- |
+| `src/api/http.js` | A viagem crua: monta o endereço, envia, lê a resposta, transforma recusa em `ApiError` |
+| `src/api/session.js` | Quem está logado: entrar, sair, cadastrar loja, restaurar a sessão, renovar o token |
+| `src/api/client.js` | O que as telas usam: assina cada requisição com o token e renova quando ele expira |
+
+## Sessão
+
+- **O access token fica só na memória**, numa variável do módulo — nunca em
+  `localStorage`, que qualquer script na página consegue ler. O refresh token nem chega
+  ao JavaScript: a API o guarda num cookie `HttpOnly`.
+- **Ao abrir a página**, chame `restoreSession()`: troca o cookie por um token novo.
+  Devolve a conta, ou `null` quando não há sessão (hora de mostrar o login). Sem
+  internet ele lança erro — estar offline não é estar deslogado.
+- **Token expirado no meio do uso** (dura 15 minutos): o cliente renova sozinho e repete a
+  requisição uma vez. A pessoa não percebe.
+- **Uma renovação por vez, sempre.** A API aposenta o refresh token no instante em que ele
+  é usado, e vê-lo de novo é tratado como roubo: todas as sessões da pessoa caem. Por
+  isso, requisições que expiram juntas esperam a mesma renovação, e abas diferentes se
+  revezam pela Web Locks API (`navigator.locks`).
+- **`onSessionChange(listener)`** avisa a cada entrada, saída ou expiração — é por ali que
+  o app vai trocar para a tela de login.
 
 Sem tipos, nada avisa em tempo de build quando a API muda um campo. O contrato fica em
 `Storage/openapi/storage-api.json`, versionado no backend: confira ali antes de usar uma
@@ -65,6 +88,6 @@ sem nunca passar por `parseFloat`.
 
 ## Estado
 
-Base pronta: cliente da API, traduções, tratamento de erro e dinheiro, com testes. A tela
-inicial só mostra se o servidor está no ar — as telas de verdade esperam a escolha da
-biblioteca visual.
+Base pronta: cliente da API com sessão e renovação automática, mensagens em português
+para todos os códigos de erro da API, dinheiro, com testes. A tela inicial só mostra se o
+servidor está no ar — as telas de verdade esperam a escolha da biblioteca visual.

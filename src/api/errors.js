@@ -2,6 +2,9 @@
 export const NETWORK_ERROR = 'network'
 export const UNKNOWN_ERROR = 'unknown'
 
+// The API's answer to a missing or expired access token: the cue to refresh and retry.
+export const UNAUTHENTICATED = 'auth.unauthenticated'
+
 // A request the API refused, or could not be asked at all.
 //
 // It carries the stable `code` the API sends in its problem document. The screen shows the

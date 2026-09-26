@@ -11,8 +11,31 @@
   "errors": {
     "network": "Sem conexão com o servidor. Verifique a internet e tente de novo.",
     "unknown": "Algo deu errado do nosso lado. Tente de novo em instantes.",
+    "request": {
+      "malformed": "Algo deu errado ao enviar os dados. Recarregue a página e tente de novo."
+    },
     "auth": {
-      "no_tenant": "Sua sessão expirou. Entre de novo."
+      "unauthenticated": "Sua sessão expirou. Entre de novo.",
+      "no_tenant": "Sua sessão expirou. Entre de novo.",
+      "session_invalid": "Sua sessão expirou. Entre de novo.",
+      "forbidden": "Só o dono da loja pode fazer isso.",
+      "invalid_credentials": "E-mail ou senha incorretos.",
+      "locked_out": "Muitas tentativas erradas. Por segurança, a conta ficou bloqueada por 15 minutos.",
+      "too_many_requests": "Muitas tentativas seguidas. Espere um minuto e tente de novo.",
+      "account_inactive": "Esta conta foi desativada. Fale com o dono da loja.",
+      "shop_inactive": "Esta loja está suspensa. Fale com o suporte."
+    },
+    "account": {
+      "not_found": "Pessoa não encontrada na equipe.",
+      "email_invalid": "Este e-mail não parece válido. Confira e tente de novo.",
+      "email_taken": "Este e-mail já tem uma conta.",
+      "name_invalid": "Informe o nome, com até 80 caracteres.",
+      "password_invalid": "A senha precisa ter de 8 a 128 caracteres.",
+      "owner_cannot_be_deactivated": "O dono da loja não pode ser desativado."
+    },
+    "shop": {
+      "name_invalid": "Dê um nome à loja, com até 80 caracteres.",
+      "time_zone_invalid": "Fuso horário desconhecido."
     },
     "barcode": {
       "invalid": "Código de barras inválido. Confira os números ou bipe de novo.",
@@ -30,7 +53,6 @@
       "not_found": "Produto não encontrado.",
       "name_invalid": "Dê um nome ao produto, com até 120 caracteres.",
       "price_negative": "O preço não pode ser negativo.",
-      "cost_negative": "O custo não pode ser negativo.",
       "minimum_stock_negative": "O estoque mínimo não pode ser negativo.",
       "barcode_repeated": "Este produto já tem esse código de barras.",
       "barcode_not_on_product": "Esse código de barras não é deste produto.",
@@ -40,6 +62,51 @@
       "not_found": "Embalagem não encontrada.",
       "factor_invalid": "Uma embalagem precisa ter pelo menos 1 unidade.",
       "name_invalid": "O nome da embalagem pode ter até 40 caracteres."
+    },
+    "batch": {
+      "quantity_invalid": "Um lote precisa ter pelo menos 1 unidade.",
+      "cost_negative": "O custo não pode ser negativo."
+    },
+    "stock": {
+      "insufficient": "Não há estoque suficiente para isso.",
+      "quantity_invalid": "Informe pelo menos 1 unidade.",
+      "note_too_long": "A observação pode ter até 200 caracteres.",
+      "changed_concurrently": "Alguém mexeu neste estoque ao mesmo tempo. Confira os números e tente de novo."
+    },
+    "supplier": {
+      "not_found": "Fornecedor não encontrado.",
+      "name_invalid": "Dê um nome ao fornecedor, com até 80 caracteres.",
+      "field_too_long": "Texto longo demais: o CNPJ vai até 20 caracteres e o contato até 120."
+    },
+    "receipt": {
+      "not_found": "Entrada de mercadoria não encontrada.",
+      "empty": "A entrada precisa ter pelo menos um item.",
+      "too_many_lines": "Uma entrada pode ter até 500 itens. Divida a nota em mais de uma entrada.",
+      "quantity_invalid": "Informe pelo menos 1 unidade em cada item.",
+      "expiry_required": "Este produto controla validade: informe a data.",
+      "already_expired": "A validade informada já passou.",
+      "field_too_long": "Texto longo demais: o número da nota vai até 30 caracteres e a observação até 200."
+    },
+    "count": {
+      "not_found": "Contagem não encontrada.",
+      "already_open": "Já existe uma contagem aberta. Termine ou cancele ela antes de começar outra.",
+      "not_open": "Esta contagem já foi encerrada.",
+      "empty": "Nada foi contado ainda.",
+      "quantity_invalid": "A quantidade contada vai de 0 a 1.000.000.",
+      "product_out_of_scope": "Este produto não faz parte da categoria que está sendo contada.",
+      "justification_required": "A contagem não bate com o sistema: explique o motivo, com até 300 caracteres."
+    },
+    "discount": {
+      "not_found": "Desconto não encontrado.",
+      "name_invalid": "Dê um nome ao desconto, com até 60 caracteres.",
+      "target_invalid": "Escolha um produto ou uma categoria para o desconto.",
+      "target_not_found": "O produto ou a categoria do desconto não existe mais.",
+      "value_invalid": "Valor de desconto inválido: a porcentagem vai de 0,01% a 100% e o valor em reais precisa ser maior que zero.",
+      "period_invalid": "O desconto não pode terminar antes de começar.",
+      "expiry_window_invalid": "O prazo de validade do desconto vai de 0 a 365 dias."
+    },
+    "report": {
+      "period_invalid": "Escolha um período de 1 a 366 dias, com o início antes do fim."
     }
   }
 }
