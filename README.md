@@ -130,6 +130,13 @@ Prontas, cada uma no seu endereço:
   líquido e margem do dia, mês ou ano, um gráfico (colunas para o vendido, linha para o
   líquido, com tabela equivalente) e os produtos vendidos.
 
+Os produtos aparecem com foto: a API busca sozinha, pelo código de barras, e manda em
+`product.photo` o endereço e o crédito. `ProductThumb` mostra a foto no branco e, sem
+ela, o monograma. Um produto recém-cadastrado ganha a foto alguns segundos depois:
+`usePhotoArrival` pergunta de novo e troca o monograma pela foto no lugar. O crédito
+("Foto: Open Food Facts"), que a licença pede, aparece onde a foto é grande: no diálogo
+do produto e embaixo da grade.
+
 As cores do gráfico (`--chart-revenue` e `--chart-net`, em `src/index.css`) foram
 validadas como par contra o fundo do card nos dois temas: faixa de luminosidade, croma,
 contraste e separação para daltônicos.

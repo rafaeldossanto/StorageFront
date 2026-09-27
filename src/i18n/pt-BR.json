@@ -55,6 +55,10 @@
     "empty": "Nenhum produto nesta categoria ainda. Bipe um código para cadastrar o primeiro.",
     "noResults": "Nada encontrado para “{{term}}”.",
     "inactive": "Inativo",
+    "photo": {
+      "credit": "Foto: {{source}}",
+      "creditAll": "Fotos dos produtos: Open Food Facts e bases irmãs, sob licença CC BY-SA."
+    },
     "session": {
       "title": "Nesta sessão",
       "empty": "Os produtos que você cadastrar ou editar aparecem aqui, com o preço editável na hora.",

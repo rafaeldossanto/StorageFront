@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ProductDialog } from '@/features/products/ProductDialog'
+import { usePhotoArrival } from '@/hooks/usePhotoArrival'
 import { useScanner } from '@/hooks/useScanner'
 import { formatCents } from '@/lib/money'
 import { today } from '@/lib/period'
@@ -88,6 +89,9 @@ export function ReceivingScreen() {
 
   useScanner(scan, { enabled: !productDialog.open && !supplierDialogOpen })
 
+  // A product registered mid-delivery gets its photo a few seconds later.
+  const watchPhoto = usePhotoArrival(delivery.refreshProduct)
+
   async function scan(code) {
     setQuery('')
 
@@ -120,6 +124,7 @@ export function ReceivingScreen() {
     const product = await createProduct(fields)
     setProductDialog({ open: false, barcode: '' })
     addLine(product, fields.barcode)
+    watchPhoto(product)
     toast.success(t('receiving.productCreated'))
   }
 

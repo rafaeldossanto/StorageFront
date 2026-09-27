@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { CopyPlusIcon, MinusIcon, PlusIcon, XIcon } from 'lucide-react'
-import { Monogram } from '@/components/Monogram'
+import { ProductThumb } from '@/components/ProductThumb'
 import { MoneyInput } from '@/components/MoneyInput'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -24,7 +24,7 @@ export function DeliveryLine({ line, problem, minDate, onChange, onRemove, onSpl
   return (
     <li className={cn('grid gap-3 rounded-xl border bg-card p-3', problem && 'border-destructive ring-2 ring-destructive/20')}>
       <div className="flex items-start gap-3">
-        <Monogram name={product.name} />
+        <ProductThumb product={product} className="size-11" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{product.name}</p>
           <p className="text-xs text-muted-foreground">

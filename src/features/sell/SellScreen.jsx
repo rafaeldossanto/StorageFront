@@ -5,7 +5,7 @@ import { MinusIcon, PlusIcon, XIcon } from 'lucide-react'
 import { findByBarcode } from '@/api/catalog'
 import { ApiError, errorMessage } from '@/api/errors'
 import { cancelSale, registerSale } from '@/api/sales'
-import { Monogram } from '@/components/Monogram'
+import { ProductThumb } from '@/components/ProductThumb'
 import { ProductSearchField } from '@/components/ProductSearchField'
 import { Button } from '@/components/ui/button'
 import { useScanner } from '@/hooks/useScanner'
@@ -178,7 +178,7 @@ function CartLine({ item, problem, onQuantity, onRemove }) {
         problem && 'border-destructive ring-2 ring-destructive/20',
       )}
     >
-      <Monogram name={product.name} />
+      <ProductThumb product={product} className="size-10" />
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium">{product.name}</p>
         <p className="text-xs text-muted-foreground">

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { MinusIcon, PlusIcon } from 'lucide-react'
 import { errorMessage } from '@/api/errors'
 import { MoneyInput } from '@/components/MoneyInput'
+import { ProductThumb } from '@/components/ProductThumb'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -121,19 +122,39 @@ function ProductForm({ product, barcode, categories, defaultCategoryId, onSubmit
       </DialogHeader>
 
       {editing ? (
-        <div className="grid gap-1.5">
-          <Label>{t('products.form.packagings')}</Label>
-          <ul className="grid gap-1 rounded-lg border bg-muted/40 p-2 text-sm">
-            {product.packagings.map((packaging) => (
-              <li key={packaging.id} className="flex items-center justify-between gap-2">
-                <span className="font-mono text-xs">{packaging.displayGtin}</span>
-                <span className="text-xs text-muted-foreground">
-                  {packaging.name ? `${packaging.name} · ` : ''}
-                  {t('products.form.packagingUnits', { count: packaging.conversionFactor })}
-                </span>
-              </li>
-            ))}
-          </ul>
+        <div className="flex items-start gap-3">
+          <figure className="grid w-20 shrink-0 justify-items-center gap-1">
+            <ProductThumb product={product} className="size-20 rounded-lg border text-lg" />
+            {/* The photo's licence asks for its source to be credited where it is shown. */}
+            {product.photo && (
+              <figcaption className="text-center text-[10px] leading-tight text-muted-foreground">
+                <a
+                  href={product.photo.sourcePage}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={product.photo.license}
+                  className="underline-offset-2 hover:underline"
+                >
+                  {t('products.photo.credit', { source: product.photo.source })}
+                </a>
+              </figcaption>
+            )}
+          </figure>
+
+          <div className="grid min-w-0 flex-1 gap-1.5">
+            <Label>{t('products.form.packagings')}</Label>
+            <ul className="grid gap-1 rounded-lg border bg-muted/40 p-2 text-sm">
+              {product.packagings.map((packaging) => (
+                <li key={packaging.id} className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-xs">{packaging.displayGtin}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {packaging.name ? `${packaging.name} · ` : ''}
+                    {t('products.form.packagingUnits', { count: packaging.conversionFactor })}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       ) : (
         <div className="grid gap-1.5">

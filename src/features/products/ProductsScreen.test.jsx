@@ -66,6 +66,36 @@ describe('ProductsScreen', () => {
     expect(within(dialog).getByLabelText('Nome')).toHaveFocus()
   })
 
+  it('shows a product with its photo, and credits the photo where it is shown big', async () => {
+    const known = {
+      ...productFrom({ name: 'Energético 473ml', categoryId: beverages.id, salePriceCents: 899, barcode: '7891000000014' }),
+      photo: {
+        url: '/api/product-photos/07891000000014?v=ab12',
+        source: 'Open Food Facts',
+        sourcePage: 'https://world.openfoodfacts.org/product/7891000000014',
+        license: 'CC BY-SA 3.0',
+      },
+    }
+    fakeApi({
+      'GET /api/categories': () => [200, [beverages]],
+      'GET /api/products': () => [200, { items: [known], page: 1, pageSize: 24, total: 1, totalPages: 1 }],
+      'GET /api/products/by-barcode/7891000000014': () => [200, known],
+    })
+    const { container } = renderScreen()
+    await screen.findByText('Energético 473ml')
+
+    expect(container.querySelector('img[src="http://api.test/api/product-photos/07891000000014?v=ab12"]')).not.toBeNull()
+    expect(screen.getByText(/Fotos dos produtos: Open Food Facts/)).toBeInTheDocument()
+
+    scan('7891000000014')
+
+    const dialog = await screen.findByRole('dialog')
+    expect(within(dialog).getByRole('link', { name: 'Foto: Open Food Facts' })).toHaveAttribute(
+      'href',
+      'https://world.openfoodfacts.org/product/7891000000014',
+    )
+  })
+
   it('opens a known product for editing when its code is scanned', async () => {
     const known = productFrom({ name: 'Energético 473ml', categoryId: beverages.id, salePriceCents: 899, barcode: '7891000000014' })
     fakeApi({

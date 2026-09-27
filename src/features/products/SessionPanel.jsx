@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { CheckIcon, PencilIcon } from 'lucide-react'
 import { errorMessage } from '@/api/errors'
 import { MoneyInput } from '@/components/MoneyInput'
+import { ProductThumb } from '@/components/ProductThumb'
 import { Button } from '@/components/ui/button'
 
 // What was registered or edited since the screen opened, newest first. The price is
@@ -61,9 +62,12 @@ function SessionItem({ product, path, onOpen, onPriceCommit }) {
   return (
     <li className="grid gap-1.5 border-b pb-4 last:border-b-0">
       <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <p className="truncate text-sm font-medium">{product.name}</p>
-          <p className="truncate text-xs text-muted-foreground">{path}</p>
+        <div className="flex min-w-0 items-center gap-2.5">
+          <ProductThumb product={product} className="size-9" />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium">{product.name}</p>
+            <p className="truncate text-xs text-muted-foreground">{path}</p>
+          </div>
         </div>
         {status.kind === 'saved' && (
           <span className="flex items-center gap-1 text-xs text-money" role="status">

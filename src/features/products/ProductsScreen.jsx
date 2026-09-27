@@ -15,6 +15,7 @@ import { ApiError, errorMessage } from '@/api/errors'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
+import { usePhotoArrival } from '@/hooks/usePhotoArrival'
 import { useScanner } from '@/hooks/useScanner'
 import { isTypedBarcode } from '@/lib/barcode'
 import { cn } from '@/lib/utils'
@@ -66,6 +67,13 @@ export function ProductsScreen() {
 
   useScanner(lookUp, { enabled: !dialog.open })
 
+  // A product registered here gets its photo a few seconds later; it replaces the monogram
+  // wherever the product shows, without moving anything.
+  const watchPhoto = usePhotoArrival((withPhoto) => {
+    setSession((current) => current.map((item) => (item.id === withPhoto.id ? withPhoto : item)))
+    list.upsert(withPhoto, { belongs: false })
+  })
+
   async function lookUp(code) {
     setQuery('')
 
@@ -100,6 +108,7 @@ export function ProductsScreen() {
     setDialog({ open: false })
     touch(product)
     list.upsert(product, { belongs: !searching && isInBranch(tree, categoryId, product.categoryId) })
+    watchPhoto(product)
 
     toast.success(t('products.toast.created'), {
       description: t('products.toast.createdHint'),
@@ -252,6 +261,11 @@ export function ProductsScreen() {
             >
               {t('products.loadMore')}
             </Button>
+          )}
+
+          {/* The licence of the photos asks for their source where they are shown. */}
+          {list.items.some((product) => product.photo) && (
+            <p className="text-center text-[11px] text-muted-foreground">{t('products.photo.creditAll')}</p>
           )}
         </div>
       </section>

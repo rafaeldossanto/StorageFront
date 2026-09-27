@@ -72,11 +72,16 @@ export function useDelivery() {
     setLines([])
   }
 
+  // A newer copy of a product already in the delivery - the same one, now with its photo.
+  function refreshProduct(product) {
+    setLines((current) => current.map((line) => (line.product.id === product.id ? { ...line, product } : line)))
+  }
+
   // Lines still without a cost count as zero here; they are flagged before anything is sent.
   const totalCents = lines.reduce((sum, line) => sum + (line.costCents ?? 0) * line.quantity, 0)
   const units = lines.reduce((sum, line) => sum + line.quantity * line.factor, 0)
 
-  return { lines, totalCents, units, add, change, remove, split, clear }
+  return { lines, totalCents, units, add, change, remove, split, clear, refreshProduct }
 }
 
 // What is wrong with each line before the API is asked: { [key]: 'quantity' | 'cost' | 'expiry' }.

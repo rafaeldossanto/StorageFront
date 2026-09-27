@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { PencilIcon } from 'lucide-react'
-import { Monogram } from '@/components/Monogram'
+import { ProductThumb } from '@/components/ProductThumb'
 import { formatCents } from '@/lib/money'
 import { cn } from '@/lib/utils'
 
@@ -17,21 +17,23 @@ export function ProductCard({ product, highlighted, onOpen }) {
       type="button"
       onClick={() => onOpen(product)}
       className={cn(
-        'group relative flex min-h-28 flex-col gap-2 rounded-xl border bg-card p-3 text-left transition-all hover:-translate-y-px hover:border-primary/40 hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none',
+        'group relative flex flex-col gap-2 rounded-xl border bg-card p-2.5 text-left transition-all hover:-translate-y-px hover:border-primary/40 hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none',
         highlighted && 'border-primary ring-2 ring-primary/25',
         !product.active && 'opacity-60',
       )}
     >
-      <span className="flex items-start justify-between gap-2">
-        <Monogram name={product.name} />
-        <span className="flex size-6 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+      {/* The photo on white, as a catalogue shows it; the monogram fills the same space
+          when there is none, so every card in the grid keeps one height. */}
+      <span className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-lg bg-white">
+        <ProductThumb product={product} className="size-full rounded-none p-2 text-xl" />
+        <span className="absolute top-1.5 right-1.5 flex size-6 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
           <PencilIcon className="size-3" />
         </span>
       </span>
 
-      <span className="line-clamp-2 text-sm leading-snug font-medium">{product.name}</span>
+      <span className="line-clamp-2 min-h-[2lh] px-0.5 text-sm leading-snug font-medium">{product.name}</span>
 
-      <span className="mt-auto flex items-end justify-between gap-2">
+      <span className="mt-auto flex items-end justify-between gap-2 px-0.5">
         <span className="font-mono text-sm font-medium text-money tabular-nums">
           {formatCents(product.salePriceCents)}
         </span>

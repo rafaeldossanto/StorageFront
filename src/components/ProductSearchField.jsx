@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { ScanBarcodeIcon } from 'lucide-react'
 import { searchProducts } from '@/api/catalog'
 import { errorMessage } from '@/api/errors'
-import { Monogram } from '@/components/Monogram'
+import { ProductThumb } from '@/components/ProductThumb'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import { isTypedBarcode } from '@/lib/barcode'
 import { formatCents } from '@/lib/money'
@@ -80,7 +80,7 @@ export function ProductSearchField({ query, onQueryChange, onCode, onPick, place
                   onClick={() => pick(product)}
                   className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm hover:bg-muted"
                 >
-                  <Monogram name={product.name} className="size-7" />
+                  <ProductThumb product={product} className="size-8" />
                   <span className="flex-1 truncate">{product.name}</span>
                   <span className="font-mono text-money tabular-nums">{formatCents(product.salePriceCents)}</span>
                 </button>
